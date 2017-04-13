@@ -1,22 +1,16 @@
 /*
-TV-B-Gone Firmware version 1.2
-for use with ATtiny85v and v1.2 hardware
-(c) Mitch Altman + Limor Fried 2009
-Last edits, August 16 2009
+Last edit by Mordecai Veldt 4/13/17
+TV-B-Gone for Trinket; based upon TV-B-Gone firmware 1.2 (c) Mitch Altman +Limor Fried 2009
+CC BY-SA 4.0 International
+for use with Adafruit Trinket
 
-With some code from:
-Kevin Timmerman & Damien Good 7-Dec-07
-
-Distributed under Creative Commons 2.5 -- Attib & Share Alike
-
-This is the 'universal' code designed for v1.2 - it will select EU or NA
-depending on a pulldown resistor on pin B1 !
+See README.md for more details.
 */
 
 #include <avr/io.h>             // this contains all the IO port definitions
 #include <avr/eeprom.h>
 #include <avr/sleep.h>          // definitions for power-down modes
-#include <avr/pgmspace.h>       // definitions or keeping constants in program memory
+#include <avr/pgmspace.h>       // definitions for keeping constants in program memory
 #include <avr/wdt.h>
 #include "main.h"
 
