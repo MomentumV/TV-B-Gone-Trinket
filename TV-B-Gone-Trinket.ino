@@ -62,14 +62,15 @@ The hardware for this project is very simple:
                     make burn-fuse_cr
 */
 
+#define codeset 0  
 #include <avr/io.h>             // this contains all the IO port definitions
 #include <avr/sleep.h>          // definitions for power-down modes
 #include <avr/pgmspace.h>       // definitions for keeping constants in program memory
 #include "WORLD_IR_CODES.h"     // 
-#define codeset 0               // 
+             // 
 
-void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t PWM_code );
-void flashslowLEDx( uint8_t num_blinks );
+void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t period );
+//void flashslowLEDx( uint8_t num_blinks );
 void quickflashLEDx( uint8_t x );
 void tvbgone_sleep( void );
 void delay_ten_us(uint16_t us);
@@ -84,23 +85,27 @@ extern uint8_t num_NAcodes, num_EUcodes;
 /* This function is the 'workhorse' of transmitting IR codes.
    Given the on and off times, it turns on the PWM output on and off
    to generate one 'pair' from a long code. Each code has ~50 pairs! */
-void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t PWM_code )
+void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t period )
 {
   // start Timer0 outputting the carrier frequency to IR emitters on and OC0A 
   // (PB0, pin 5)
   TCNT0 = 0; // reset the timers so they are aligned
   TIFR = 0;  // clean out the timer flags
 
-  if(PWM_code) {
+  if(period) {
     // 99% of codes are PWM codes, they are pulses of a carrier frequecy
     // Usually the carrier is around 38KHz, and we generate that with PWM
     // timer 0
-    TCCR0A = _BV(COM0A0) | _BV(WGM01);          // set up timer 0
-    //COM0A0 set makes OC0A toggle on match (see table 11-2 in atttiny 85 datasheet)
-    //WGM01 sets the waveform mode to CTC, with a top value set in OCRA
+    TCCR0A = _BV(COM0A0) | _BV(WGM01);          // configure timer 0
     TCCR0B = _BV(CS00);
-    //Counter 0 scaler bit 0 (divide clock freq by 2^(n-1) =0) 
-    //if you don't set any of the scaler bits, the timer is disabled.
+ /*notes on timer configuration:
+  * setting WGM01 (waveform generation mode bit 1) is equivalent to mode 2 (0b010) 
+  * Mode 2 set counter 0 in CTC mode (clear timer on compare) for more introductory detail on these avr timers, see here: w8bh.net/avr/TrinketTimers.pdf
+  * the compare value used to restart the timer is stored in OCRA
+  * COM0A0 set makes OC0A _toggle_ on match (see table 11-2 in atttiny 85 datasheet) http://www.atmel.com/images/atmel-2586-avr-8-bit-microcontroller-attiny25-attiny45-attiny85_datasheet.pdf
+  * In register B, set counter 0 scaler bit 0 (divide clock freq by 2^(n-1) =0)  
+  * if you don't set any of the scaler bits, the timer is disabled. 
+  */
   } else {
     // However some codes dont use PWM in which case we just turn the IR
     // LED on for the period of time.
@@ -115,7 +120,7 @@ void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t PWM_code )
   TCCR0A = 0;
   TCCR0B = 0;
   // And make sure that the IR LED is off too (since the PWM may have 
-  // been stopped while the LED is on!)
+  // been stopped while the LED is on!, or if it isn't a PWM code.) 
   PORTB |= _BV(IRLED);           // turn off IR LED, by putting IRLED port HIGH
 
   // Now we wait for the specified 'off' time
@@ -203,15 +208,15 @@ void setup(){
       extern const IrCode* const EUpowerCodes[] PROGMEM;
       extern uint8_t num_EUcodes;
     }
-    DDRB = _BV(LED) | _BV(IRLED);   // set the visible and IR LED pins to outputs
-    PORTB = _BV(LED) |              //  visible LED is off when pin is high
-    _BV(IRLED) |            // IR LED is off when pin is high
+    DDRB =  _BV(IRLED); //|_BV(LED);   // set the visible and IR LED pins to outputs
+    //PORTB =// _BV(LED) |              //  visible LED is off when pin is high
+    PORTB = _BV(IRLED) |            // IR LED is off when pin is high
     _BV(REGIONSWITCH);     // Turn on pullup on region switch pin
     
     // check the reset flags
     if (i & _BV(BORF)) {    // Brownout
     // Flash out an error and go to sleep
-    flashslowLEDx(2);  
+    //flashslowLEDx(2);  
     tvbgone_sleep();  
   }
 }
@@ -241,8 +246,8 @@ void sendAllCodes(){
     region = EU;
   }
 
-  // Tell the user what region we're in  - 3 is US 4 is EU
-  quickflashLEDx(3+region);
+  // Tell the user what region we're in  - 5 is US 6 is EU
+  quickflashLEDx(5+region);
   
   // Starting execution loop
   delay_ten_us(25000);
@@ -275,9 +280,9 @@ void sendAllCodes(){
       }
 
       // Read the carrier frequency from the first byte of code structure
-      const uint8_t freq = pgm_read_byte(data_ptr++);
+      uint8_t timer_period = pgm_read_byte(data_ptr++);
       // set OCR for Timer1 to output this POWER code's carrier frequency
-      OCR0A = freq; 
+      OCR0A = timer_period; 
       
       // Get the number of pairs, the second byte from the code struct
       const uint8_t numpairs = pgm_read_byte(data_ptr++);
@@ -314,7 +319,7 @@ void sendAllCodes(){
          offtime = pgm_read_word(time_ptr+ti+2);  // read word 2 - offtime
          
          // transmit this codeElement (ontime and offtime)
-         xmitCodeElement(ontime, offtime, (freq!=0));  
+         xmitCodeElement(ontime, offtime, (timer_period!=0));  
       } 
       sei(); //not sure if we need this or the cli() above
       //Flush remaining bits, so that next code starts
@@ -353,8 +358,8 @@ void tvbgone_sleep( void )
   // Shut down everything and put the CPU to sleep
   TCCR0A = 0;           // turn off frequency generator (should be off already)
   TCCR0B = 0;           // turn off frequency generator (should be off already)
-  PORTB |= _BV(LED) |       // turn off visible LED
-           _BV(IRLED);     // turn off IR LED
+  //PORTB |= _BV(LED);       // turn off visible LED
+  PORTB |= _BV(IRLED);     // turn off IR LED
 
   delay_ten_us(1000);      // wait 10 millisec
 
@@ -387,14 +392,17 @@ void delay_ten_us(uint16_t us) {
 
 // This function quickly pulses the visible LED (connected to PB0, pin 5)
 // This will indicate to the user that a code is being transmitted
+
 void quickflashLED( void ) {
   PORTB &= ~_BV(LED);   // turn on visible LED at PB0 by pulling pin to ground
   delay_ten_us(3000);   // 30 millisec delay
   PORTB |= _BV(LED);    // turn off visible LED at PB0 by pulling pin to +3V
 }
 
+
 // This function just flashes the visible LED a couple times, used to
 // tell the user what region is selected
+
 void quickflashLEDx( uint8_t x ) {
   quickflashLED();
   while(--x) {
@@ -407,6 +415,7 @@ void quickflashLEDx( uint8_t x ) {
 
 // This is like the above but way slower, used for when the tvbgone
 // crashes and wants to warn the user
+/*
 void flashslowLEDx( uint8_t num_blinks )
 {
   uint8_t i;
@@ -422,3 +431,4 @@ void flashslowLEDx( uint8_t num_blinks )
      // wdt_reset();                 // kick the dog //remove watchdog
     }
 }
+*/

@@ -13,7 +13,7 @@ TV-B-Gone Firmware version 1.2
 //Codes captured from Generation 3 TV-B-Gone by Limor Fried & Mitch Altman
 //table of POWER codes
 
-#include "main.h"
+#include "main.h" //includes struct definition, as well as 
 
 const uint16_t code_na000Times[] PROGMEM = {
   60, 60,
@@ -1334,7 +1334,883 @@ const struct IrCode code_na040Code PROGMEM = {
   code_na040Codes
 };
 
+const uint16_t code_na041Times[] PROGMEM = {
+  58, 62,
+  58, 2746,
+  117, 62,
+  242, 62,
+};
+const uint8_t code_na041Codes[] PROGMEM = {
+  0xE2,
+  0x20,
+  0x80,
+  0x78,
+  0x88,
+  0x20,
+  0x00,
+};
+const struct IrCode code_na041Code PROGMEM = {
+  freq_to_timerval(76923),
+  26,    // # of pairs
+  2,    // # of bits per index
+  code_na041Times,
+  code_na041Codes
+};
+const uint16_t code_na042Times[] PROGMEM = {
+  54, 65,
+  54, 170,
+  54, 4099,
+  54, 8668,
+  899, 226,
+  899, 421,
+};
+const uint8_t code_na042Codes[] PROGMEM = {
+  0xA4,
+  0x80,
+  0x00,
+  0x20,
+  0x82,
+  0x49,
+  0x00,
+  0x02,
+  0x00,
+  0x04,
+  0x90,
+  0x49,
+  0x2A,
+  0x38,
+  0x40,
+};
+const struct IrCode code_na042Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na042Times,
+  code_na042Codes
+};
+const uint16_t code_na043Times[] PROGMEM = {
+  43, 120,
+  43, 121,
+  43, 3491,
+  131, 45,
+};
+const uint8_t code_na043Codes[] PROGMEM = {
+  0x15,
+  0x75,
+  0x56,
+  0x55,
+  0x75,
+  0x54,
+};
+const struct IrCode code_na043Code PROGMEM = {
+  freq_to_timerval(40000),
+  24,   // # of pairs
+  2,    // # of bits per index
+  code_na043Times,
+  code_na043Codes
+};
+const uint16_t code_na044Times[] PROGMEM = {
+  51, 51,
+  51, 160,
+  51, 4096,
+  51, 9513,
+  431, 436,
+  883, 219,
+};
+const uint8_t code_na044Codes[] PROGMEM = {
+  0x84,
+  0x90,
+  0x00,
+  0x00,
+  0x02,
+  0x49,
+  0x20,
+  0x80,
+  0x00,
+  0x04,
+  0x12,
+  0x49,
+  0x2A,
+  0xBA,
+  0x40,
+};
+const struct IrCode code_na044Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na044Times,
+  code_na044Codes
+};
+const uint16_t code_na045Times[] PROGMEM = {
+  58, 53,
+  58, 167,
+  58, 4494,
+  58, 9679,
+  455, 449,
+  456, 449,
+};
+const uint8_t code_na045Codes[] PROGMEM = {
+  0x80,
+  0x90,
+  0x00,
+  0x00,
+  0x90,
+  0x00,
+  0x04,
+  0x92,
+  0x00,
+  0x00,
+  0x00,
+  0x49,
+  0x2A,
+  0x97,
+  0x48,
+};
+const struct IrCode code_na045Code PROGMEM = {
+  freq_to_timerval(38462),
+  40,   // # of pairs
+  3,    // # of bits per index
+  code_na045Times,
+  code_na045Codes
+};
+const uint16_t code_na046Times[] PROGMEM = {
+  51, 277,
+  52, 53,
+  52, 105,
+  52, 277,
+  52, 2527,
+  52, 12809,
+  103, 54,
+};
+const uint8_t code_na046Codes[] PROGMEM = {
+  0x0B,
+  0x12,
+  0x63,
+  0x44,
+  0x92,
+  0x6B,
+  0x44,
+  0x92,
+  0x50,
+};
+const struct IrCode code_na046Code PROGMEM = {
+  freq_to_timerval(29412),
+  23,   // # of pairs
+  3,    // # of bits per index
+  code_na046Times,
+  code_na046Codes
+};
 
+/* Duplicate timing table, same as na017 !
+ const uint16_t code_na047Times[] PROGMEM = {
+  56, 57,
+  56, 175,
+  56, 4150,
+  56, 9499,
+  898, 227,
+  898, 449,
+ };
+ */
+const uint8_t code_na047Codes[] PROGMEM = {
+  0xA0,
+  0x00,
+  0x40,
+  0x04,
+  0x92,
+  0x09,
+  0x24,
+  0x92,
+  0x09,
+  0x20,
+  0x00,
+  0x40,
+  0x0A,
+  0x38,
+  0x00,
+};
+const struct IrCode code_na047Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na017Times,
+  code_na047Codes
+};
+
+/* Duplicate timing table, same as na044 !
+ const uint16_t code_na048Times[] PROGMEM = {
+  51, 51,
+  51, 160,
+  51, 4096,
+  51, 9513,
+  431, 436,
+  883, 219,
+ };
+ */
+const uint8_t code_na048Codes[] PROGMEM = {
+  0x80,
+  0x00,
+  0x00,
+  0x04,
+  0x92,
+  0x49,
+  0x24,
+  0x92,
+  0x00,
+  0x00,
+  0x00,
+  0x49,
+  0x2A,
+  0xBA,
+  0x00,
+};
+const struct IrCode code_na048Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na044Times,
+  code_na048Codes
+};
+const uint16_t code_na049Times[] PROGMEM = {
+  274, 854,
+  274, 1986,
+};
+const uint8_t code_na049Codes[] PROGMEM = {
+  0x14,
+  0x11,
+  0x40,
+};
+const struct IrCode code_na049Code PROGMEM = {
+  freq_to_timerval(45455),
+  11,   // # of pairs
+  2,    // # of bits per index
+  code_na049Times,
+  code_na049Codes
+};
+const uint16_t code_na050Times[] PROGMEM = {
+  80, 88,
+  80, 254,
+  80, 3750,
+  359, 331,
+};
+const uint8_t code_na050Codes[] PROGMEM = {
+  0xC0,
+  0x00,
+  0x01,
+  0x55,
+  0x55,
+  0x52,
+  0xC0,
+  0x00,
+  0x01,
+  0x55,
+  0x55,
+  0x50,
+};
+const struct IrCode code_na050Code PROGMEM = {
+  freq_to_timerval(55556),
+  48,   // # of pairs
+  2,    // # of bits per index
+  code_na050Times,
+  code_na050Codes
+};
+
+/* Duplicate timing table, same as na017 !
+ const uint16_t code_na051Times[] PROGMEM = {
+  56, 57,
+  56, 175,
+  56, 4150,
+  56, 9499,
+  898, 227,
+  898, 449,
+ };
+ */
+const uint8_t code_na051Codes[] PROGMEM = {
+  0xA0,
+  0x10,
+  0x01,
+  0x24,
+  0x82,
+  0x48,
+  0x00,
+  0x02,
+  0x40,
+  0x04,
+  0x90,
+  0x09,
+  0x2A,
+  0x38,
+  0x00,
+};
+const struct IrCode code_na051Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na017Times,
+  code_na051Codes
+};
+
+/* Duplicate timing table, same as na017 !
+ const uint16_t code_na052Times[] PROGMEM = {
+  56, 57,
+  56, 175,
+  56, 4150,
+  56, 9499,
+  898, 227,
+  898, 449,
+ };
+ */
+const uint8_t code_na052Codes[] PROGMEM = {
+  0xA4,
+  0x90,
+  0x48,
+  0x00,
+  0x02,
+  0x01,
+  0x20,
+  0x80,
+  0x40,
+  0x04,
+  0x12,
+  0x09,
+  0x2A,
+  0x38,
+  0x40,
+};
+const struct IrCode code_na052Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na017Times,
+  code_na052Codes
+};
+const uint16_t code_na053Times[] PROGMEM = {
+  51, 232,
+  51, 512,
+  51, 792,
+  51, 2883,
+};
+const uint8_t code_na053Codes[] PROGMEM = {
+  0x22,
+  0x21,
+  0x40,
+  0x1C,
+  0x88,
+  0x85,
+  0x00,
+  0x40,
+};
+const struct IrCode code_na053Code PROGMEM = {
+  freq_to_timerval(55556),
+  30,   // # of pairs
+  2,    // # of bits per index
+  code_na053Times,
+  code_na053Codes
+};
+
+/* Duplicate timing table, same as na053 !
+ const uint16_t code_na054Times[] PROGMEM = {
+  51, 232,
+  51, 512,
+  51, 792,
+  51, 2883,
+ };
+ */
+const uint8_t code_na054Codes[] PROGMEM = {
+  0x22,
+  0x20,
+  0x15,
+  0x72,
+  0x22,
+  0x01,
+  0x54,
+};
+const struct IrCode code_na054Code PROGMEM = {
+  freq_to_timerval(55556),
+  28,   // # of pairs
+  2,    // # of bits per index
+  code_na053Times,
+  code_na054Codes
+};
+const uint16_t code_na055Times[] PROGMEM = {
+  3, 10,
+  3, 20,
+  3, 30,
+  3, 12778,
+};
+const uint8_t code_na055Codes[] PROGMEM = {
+  0x81,
+  0x51,
+  0x14,
+  0xB8,
+  0x15,
+  0x11,
+  0x44,
+};
+const struct IrCode code_na055Code PROGMEM = {
+  0,              // Non-pulsed code
+  27,   // # of pairs
+  2,    // # of bits per index
+  code_na055Times,
+  code_na055Codes
+};
+const uint16_t code_na056Times[] PROGMEM = {
+  55, 193,
+  57, 192,
+  57, 384,
+  58, 0,
+};
+const uint8_t code_na056Codes[] PROGMEM = {
+  0x2A,
+  0x57,
+};
+const struct IrCode code_na056Code PROGMEM = {
+  freq_to_timerval(37175),
+  8,    // # of pairs
+  2,    // # of bits per index
+  code_na056Times,
+  code_na056Codes
+};
+const uint16_t code_na057Times[] PROGMEM = {
+  45, 148,
+  46, 148,
+  46, 351,
+  46, 2781,
+};
+const uint8_t code_na057Codes[] PROGMEM = {
+  0x2A,
+  0x5D,
+  0xA9,
+  0x60,
+};
+const struct IrCode code_na057Code PROGMEM = {
+  freq_to_timerval(40000),
+  14,   // # of pairs
+  2,    // # of bits per index
+  code_na057Times,
+  code_na057Codes
+};
+const uint16_t code_na058Times[] PROGMEM = {
+  22, 101,
+  22, 219,
+  23, 101,
+  23, 219,
+  31, 218,
+};
+const uint8_t code_na058Codes[] PROGMEM = {
+  0x8D,
+  0xA4,
+  0x08,
+  0x04,
+  0x04,
+  0x92,
+  0x4C,
+};
+const struct IrCode code_na058Code PROGMEM = {
+  freq_to_timerval(33333),
+  18,   // # of pairs
+  3,    // # of bits per index
+  code_na058Times,
+  code_na058Codes
+};
+
+/* Duplicate timing table, same as na017 !
+ const uint16_t code_na059Times[] PROGMEM = {
+  56, 57,
+  56, 175,
+  56, 4150,
+  56, 9499,
+  898, 227,
+  898, 449,
+ };
+ */
+const uint8_t code_na059Codes[] PROGMEM = {
+  0xA4,
+  0x12,
+  0x09,
+  0x00,
+  0x80,
+  0x40,
+  0x20,
+  0x10,
+  0x40,
+  0x04,
+  0x82,
+  0x09,
+  0x2A,
+  0x38,
+  0x40,
+};
+const struct IrCode code_na059Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na017Times,
+  code_na059Codes
+};
+
+/* Duplicate timing table, same as na017 !
+ const uint16_t code_na060Times[] PROGMEM = {
+  56, 57,
+  56, 175,
+  56, 4150,
+  56, 9499,
+  898, 227,
+  898, 449,
+ };
+ */
+const uint8_t code_na060Codes[] PROGMEM = {
+  0xA0,
+  0x00,
+  0x08,
+  0x04,
+  0x92,
+  0x41,
+  0x24,
+  0x00,
+  0x40,
+  0x00,
+  0x92,
+  0x09,
+  0x2A,
+  0x38,
+  0x00,
+};
+const struct IrCode code_na060Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na017Times,
+  code_na060Codes
+};
+
+/* Duplicate timing table, same as na017 !
+ const uint16_t code_na061Times[] PROGMEM = {
+  56, 57,
+  56, 175,
+  56, 4150,
+  56, 9499,
+  898, 227,
+  898, 449,
+ };
+ */
+const uint8_t code_na061Codes[] PROGMEM = {
+  0xA0,
+  0x00,
+  0x08,
+  0x24,
+  0x92,
+  0x41,
+  0x04,
+  0x82,
+  0x00,
+  0x00,
+  0x10,
+  0x49,
+  0x2A,
+  0x38,
+  0x00,
+};
+const struct IrCode code_na061Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na017Times,
+  code_na061Codes
+};
+
+/* Duplicate timing table, same as na017 !
+ const uint16_t code_na062Times[] PROGMEM = {
+  56, 57,
+  56, 175,
+  56, 4150,
+  56, 9499,
+  898, 227,
+  898, 449,
+ };
+ */
+const uint8_t code_na062Codes[] PROGMEM = {
+  0xA0,
+  0x02,
+  0x08,
+  0x04,
+  0x90,
+  0x41,
+  0x24,
+  0x82,
+  0x00,
+  0x00,
+  0x10,
+  0x49,
+  0x2A,
+  0x38,
+  0x00,
+};
+const struct IrCode code_na062Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na017Times,
+  code_na062Codes
+};
+
+/* Duplicate timing table, same as na017 !
+ const uint16_t code_na063Times[] PROGMEM = {
+  56, 57,
+  56, 175,
+  56, 4150,
+  56, 9499,
+  898, 227,
+  898, 449,
+ };
+ */
+const uint8_t code_na063Codes[] PROGMEM = {
+  0xA4,
+  0x92,
+  0x49,
+  0x20,
+  0x00,
+  0x00,
+  0x04,
+  0x92,
+  0x48,
+  0x00,
+  0x00,
+  0x01,
+  0x2A,
+  0x38,
+  0x40,
+};
+const struct IrCode code_na063Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na017Times,
+  code_na063Codes
+};
+
+/* Duplicate timing table, same as na001 !
+ const uint16_t code_na064Times[] PROGMEM = {
+  50, 100,
+  50, 200,
+  50, 800,
+  400, 400,
+ };
+ */
+const uint8_t code_na064Codes[] PROGMEM = {
+  0xC0,
+  0x01,
+  0x51,
+  0x55,
+  0x54,
+  0x04,
+  0x2C,
+  0x00,
+  0x15,
+  0x15,
+  0x55,
+  0x40,
+  0x40,
+};
+const struct IrCode code_na064Code PROGMEM = {
+  freq_to_timerval(57143),
+  52,   // # of pairs
+  2,    // # of bits per index
+  code_na001Times,
+  code_na064Codes
+};
+const uint16_t code_na065Times[] PROGMEM = {
+  48, 98,
+  48, 197,
+  98, 846,
+  395, 392,
+  1953, 392,
+};
+const uint8_t code_na065Codes[] PROGMEM = {
+  0x84,
+  0x92,
+  0x01,
+  0x24,
+  0x12,
+  0x00,
+  0x04,
+  0x80,
+  0x08,
+  0x09,
+  0x92,
+  0x48,
+  0x04,
+  0x90,
+  0x48,
+  0x00,
+  0x12,
+  0x00,
+  0x20,
+  0x26,
+  0x49,
+  0x20,
+  0x12,
+  0x41,
+  0x20,
+  0x00,
+  0x48,
+  0x00,
+  0x80,
+  0x80,
+};
+const struct IrCode code_na065Code PROGMEM = {
+  freq_to_timerval(59172),
+  78,   // # of pairs
+  3,    // # of bits per index
+  code_na065Times,
+  code_na065Codes
+};
+const uint16_t code_na066Times[] PROGMEM = {
+  38, 276,
+  165, 154,
+  415, 155,
+  742, 154,
+};
+const uint8_t code_na066Codes[] PROGMEM = {
+  0xC0,
+  0x45,
+  0x02,
+  0x01,
+  0x14,
+  0x08,
+  0x04,
+  0x50,
+  0x00,
+};
+const struct IrCode code_na066Code PROGMEM = {
+  freq_to_timerval(38462),
+  33,   // # of pairs
+  2,    // # of bits per index
+  code_na066Times,
+  code_na066Codes
+};
+
+/* Duplicate timing table, same as na044 !
+ const uint16_t code_na067Times[] PROGMEM = {
+  51, 51,
+  51, 160,
+  51, 4096,
+  51, 9513,
+  431, 436,
+  883, 219,
+ };
+ */
+const uint8_t code_na067Codes[] PROGMEM = {
+  0x80,
+  0x02,
+  0x49,
+  0x24,
+  0x90,
+  0x00,
+  0x00,
+  0x80,
+  0x00,
+  0x04,
+  0x12,
+  0x49,
+  0x2A,
+  0xBA,
+  0x00,
+};
+const struct IrCode code_na067Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na044Times,
+  code_na067Codes
+};
+const uint16_t code_na068Times[] PROGMEM = {
+  43, 121,
+  43, 9437,
+  130, 45,
+  131, 45,
+};
+const uint8_t code_na068Codes[] PROGMEM = {
+  0x8C,
+  0x30,
+  0x0D,
+  0xCC,
+  0x30,
+  0x0C,
+};
+const struct IrCode code_na068Code PROGMEM = {
+  freq_to_timerval(40000),
+  24,   // # of pairs
+  2,    // # of bits per index
+  code_na068Times,
+  code_na068Codes
+};
+
+/* Duplicate timing table, same as na017 !
+ const uint16_t code_na069Times[] PROGMEM = {
+  56, 57,
+  56, 175,
+  56, 4150,
+  56, 9499,
+  898, 227,
+  898, 449,
+ };
+ */
+const uint8_t code_na069Codes[] PROGMEM = {
+  0xA0,
+  0x00,
+  0x00,
+  0x04,
+  0x92,
+  0x49,
+  0x24,
+  0x82,
+  0x00,
+  0x00,
+  0x10,
+  0x49,
+  0x2A,
+  0x38,
+  0x00,
+};
+const struct IrCode code_na069Code PROGMEM = {
+  freq_to_timerval(40000),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na017Times,
+  code_na069Codes
+};
+const uint16_t code_na070Times[] PROGMEM = {
+  27, 76,
+  27, 182,
+  27, 183,
+  27, 3199,
+};
+const uint8_t code_na070Codes[] PROGMEM = {
+  0x40,
+  0x02,
+  0x08,
+  0xA2,
+  0xE0,
+  0x00,
+  0x82,
+  0x28,
+  0x40,
+};
+const struct IrCode code_na070Code PROGMEM = {
+  freq_to_timerval(38462),
+  33,   // # of pairs
+  2,    // # of bits per index
+  code_na070Times,
+  code_na070Codes
+};
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////
 
 
 const uint16_t code_eu000Times[] PROGMEM = {
@@ -2182,6 +3058,1019 @@ const uint8_t code_eu023Codes[] PROGMEM = {
  };
  */
 
+ const uint8_t code_eu024Codes[] PROGMEM = {
+  0xA0,
+  0x02,
+  0x48,
+  0x04,
+  0x90,
+  0x01,
+  0x20,
+  0x00,
+  0x40,
+  0x04,
+  0x92,
+  0x09,
+  0x2B,
+  0x3D,
+  0x00,
+};
+const struct IrCode code_eu024Code PROGMEM = {
+  freq_to_timerval(38462),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na004Times,
+  code_eu024Codes
+};
+const uint16_t code_eu025Times[] PROGMEM = {
+  49, 52,
+  49, 102,
+  49, 250,
+  49, 252,
+  49, 2377,
+  49, 12009,
+  100, 52,
+  100, 102,
+};
+const uint8_t code_eu025Codes[] PROGMEM = {
+  0x47,
+  0x00,
+  0x23,
+  0x3C,
+  0x01,
+  0x59,
+  0xE0,
+  0x04,
+};
+const struct IrCode code_eu025Code PROGMEM = {
+  freq_to_timerval(31250),
+  21,   // # of pairs
+  3,    // # of bits per index
+  code_eu025Times,
+  code_eu025Codes
+};
+const uint16_t code_eu026Times[] PROGMEM = {
+  14, 491,
+  14, 743,
+  14, 4926,
+};
+const uint8_t code_eu026Codes[] PROGMEM = {
+  0x55,
+  0x40,
+  0x42,
+  0x55,
+  0x40,
+  0x41,
+};
+const struct IrCode code_eu026Code PROGMEM = {
+  freq_to_timerval(38462),
+  24,   // # of pairs
+  2,    // # of bits per index
+  code_eu026Times,
+  code_eu026Codes
+};
+
+/* Duplicate timing table, same as na004 !
+ const uint16_t code_eu027Times[] PROGMEM = {
+  55, 57,
+  55, 170,
+  55, 3949,
+  55, 9623,
+  56, 0,
+  898, 453,
+  900, 226,
+ };
+ */
+const uint8_t code_eu027Codes[] PROGMEM = {
+  0xA0,
+  0x82,
+  0x08,
+  0x24,
+  0x10,
+  0x41,
+  0x04,
+  0x10,
+  0x01,
+  0x20,
+  0x82,
+  0x48,
+  0x0B,
+  0x3D,
+  0x00,
+};
+const struct IrCode code_eu027Code PROGMEM = {
+  freq_to_timerval(38462),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na004Times,
+  code_eu027Codes
+};
+const uint16_t code_eu028Times[] PROGMEM = {
+  47, 267,
+  50, 55,
+  50, 110,
+  50, 265,
+  50, 2055,
+  50, 12117,
+  100, 57,
+};
+const uint8_t code_eu028Codes[] PROGMEM = {
+  0x04,
+  0x92,
+  0x49,
+  0x26,
+  0x34,
+  0x72,
+  0x24,
+  0x9A,
+  0xD1,
+  0xC8,
+  0x92,
+  0x48,
+};
+const struct IrCode code_eu028Code PROGMEM = {
+  freq_to_timerval(30303),
+  31,   // # of pairs
+  3,    // # of bits per index
+  code_eu028Times,
+  code_eu028Codes
+};
+const uint16_t code_eu029Times[] PROGMEM = {
+  50, 50,
+  50, 99,
+  50, 251,
+  50, 252,
+  50, 1445,
+  50, 11014,
+  102, 49,
+  102, 98,
+};
+const uint8_t code_eu029Codes[] PROGMEM = {
+  0x47,
+  0x00,
+  0x00,
+  0x00,
+  0x00,
+  0x04,
+  0x64,
+  0x62,
+  0x00,
+  0xE0,
+  0x00,
+  0x2B,
+  0x23,
+  0x10,
+  0x07,
+  0x00,
+  0x00,
+  0x80,
+};
+const struct IrCode code_eu029Code PROGMEM = {
+  freq_to_timerval(34483),
+  46,   // # of pairs
+  3,    // # of bits per index
+  code_eu029Times,
+  code_eu029Codes
+};
+
+/* Duplicate timing table, same as na004 !
+ const uint16_t code_eu030Times[] PROGMEM = {
+  55, 57,
+  55, 170,
+  55, 3949,
+  55, 9623,
+  56, 0,
+  898, 453,
+  900, 226,
+ };
+ */
+const uint8_t code_eu030Codes[] PROGMEM = {
+  0xA0,
+  0x10,
+  0x00,
+  0x04,
+  0x82,
+  0x49,
+  0x20,
+  0x02,
+  0x00,
+  0x04,
+  0x90,
+  0x49,
+  0x2B,
+  0x3D,
+  0x00,
+};
+const struct IrCode code_eu030Code PROGMEM = {
+  freq_to_timerval(38462),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na004Times,
+  code_eu030Codes
+};// Duplicate IR Code? - Smilar to NA020
+
+const uint16_t code_eu031Times[] PROGMEM = {
+  53, 53,
+  53, 160,
+  53, 1697,
+  838, 422,
+};
+const uint8_t code_eu031Codes[] PROGMEM = {
+  0xD5,
+  0x50,
+  0x15,
+  0x11,
+  0x65,
+  0x54,
+  0x05,
+  0x44,
+  0x59,
+  0x55,
+  0x01,
+  0x51,
+  0x15,
+};
+const struct IrCode code_eu031Code PROGMEM = {
+  freq_to_timerval(38462),
+  52,   // # of pairs
+  2,    // # of bits per index
+  code_eu031Times,
+  code_eu031Codes
+};
+const uint16_t code_eu032Times[] PROGMEM = {
+  49, 205,
+  49, 206,
+  49, 456,
+  49, 3690,
+};
+const uint8_t code_eu032Codes[] PROGMEM = {
+  0x1A,
+  0x56,
+  0xA5,
+  0xD6,
+  0x95,
+  0xA9,
+  0x40,
+};
+const struct IrCode code_eu032Code PROGMEM = {
+  freq_to_timerval(33333),
+  26,   // # of pairs
+  2,    // # of bits per index
+  code_eu032Times,
+  code_eu032Codes
+};
+const uint16_t code_eu033Times[] PROGMEM = {
+  48, 150,
+  50, 149,
+  50, 347,
+  50, 2936,
+};
+const uint8_t code_eu033Codes[] PROGMEM = {
+  0x2A,
+  0x5D,
+  0xA9,
+  0x60,
+};
+const struct IrCode code_eu033Code PROGMEM = {
+  freq_to_timerval(38462),
+  14,   // # of pairs
+  2,    // # of bits per index
+  code_eu033Times,
+  code_eu033Codes
+};
+
+
+/* Duplicate timing table, same as na004 !
+ const uint16_t code_eu034Times[] PROGMEM = {
+  55, 57,
+  55, 170,
+  55, 3949,
+  55, 9623,
+  56, 0,
+  898, 453,
+  900, 226,
+ };
+ */
+const uint8_t code_eu034Codes[] PROGMEM = {
+  0xA0,
+  0x02,
+  0x40,
+  0x04,
+  0x90,
+  0x09,
+  0x20,
+  0x02,
+  0x00,
+  0x04,
+  0x90,
+  0x49,
+  0x2B,
+  0x3D,
+  0x00,
+};
+const struct IrCode code_eu034Code PROGMEM = {
+  freq_to_timerval(38462),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na004Times,
+  code_eu034Codes
+};
+
+/* Duplicate timing table, same as na005 !
+ const uint16_t code_eu035Times[] PROGMEM = {
+  88, 90,
+  88, 91,
+  88, 181,
+  88, 8976,
+  177, 91,
+ };
+ */
+/*
+const uint8_t code_eu035Codes[] PROGMEM = {
+  0x10,
+  0x92,
+  0x49,
+  0x46,
+  0x33,
+  0x09,
+  0x24,
+  0x94,
+  0x60,
+ };
+ const struct IrCode code_eu035Code PROGMEM = {
+  freq_to_timerval(35714),
+  24,   // # of pairs
+  3,    // # of bits per index
+  code_na005Times,
+  code_eu035Codes
+ };// Duplicate IR Code - same as eu009!
+ */
+
+/* Duplicate timing table, same as na004 !
+ const uint16_t code_eu036Times[] PROGMEM = {
+  55, 57,
+  55, 170,
+  55, 3949,
+  55, 9623,
+  56, 0,
+  898, 453,
+  900, 226,
+ };
+ */
+const uint8_t code_eu036Codes[] PROGMEM = {
+  0xA4,
+  0x00,
+  0x49,
+  0x00,
+  0x92,
+  0x00,
+  0x20,
+  0x02,
+  0x00,
+  0x04,
+  0x90,
+  0x49,
+  0x2B,
+  0x3D,
+  0x00,
+};
+const struct IrCode code_eu036Code PROGMEM = {
+  freq_to_timerval(38462),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na004Times,
+  code_eu036Codes
+};
+const uint16_t code_eu037Times[] PROGMEM = {
+  14, 491,
+  14, 743,
+  14, 5178,
+};
+const uint8_t code_eu037Codes[] PROGMEM = {
+  0x45,
+  0x50,
+  0x02,
+  0x45,
+  0x50,
+  0x01,
+};
+const struct IrCode code_eu037Code PROGMEM = {
+  freq_to_timerval(38462),
+  24,   // # of pairs
+  2,    // # of bits per index
+  code_eu037Times,
+  code_eu037Codes
+};
+const uint16_t code_eu038Times[] PROGMEM = {
+  3, 1002,
+  3, 1495,
+  3, 3059,
+};
+const uint8_t code_eu038Codes[] PROGMEM = {
+  0x05,
+  0x60,
+  0x54,
+};
+const struct IrCode code_eu038Code PROGMEM = {
+  0,              // Non-pulsed code
+  11,   // # of pairs
+  2,    // # of bits per index
+  code_eu038Times,
+  code_eu038Codes
+};
+const uint16_t code_eu039Times[] PROGMEM = {
+  13, 445,
+  13, 674,
+  13, 675,
+  13, 4583,
+};
+const uint8_t code_eu039Codes[] PROGMEM = {
+  0x6A,
+  0x82,
+  0x83,
+  0xAA,
+  0x82,
+  0x81,
+};
+const struct IrCode code_eu039Code PROGMEM = {
+  freq_to_timerval(40161),
+  24,   // # of pairs
+  2,    // # of bits per index
+  code_eu039Times,
+  code_eu039Codes
+};
+const uint16_t code_eu040Times[] PROGMEM = {
+  85, 89,
+  85, 264,
+  85, 3402,
+  347, 350,
+  348, 350,
+};
+const uint8_t code_eu040Codes[] PROGMEM = {
+  0x60,
+  0x90,
+  0x40,
+  0x20,
+  0x80,
+  0x40,
+  0x20,
+  0x90,
+  0x41,
+  0x2A,
+  0x02,
+  0x41,
+  0x00,
+  0x82,
+  0x01,
+  0x00,
+  0x82,
+  0x41,
+  0x04,
+  0x80,
+};
+const struct IrCode code_eu040Code PROGMEM = {
+  freq_to_timerval(35714),
+  52,   // # of pairs
+  3,    // # of bits per index
+  code_eu040Times,
+  code_eu040Codes
+};
+const uint16_t code_eu041Times[] PROGMEM = {
+  46, 300,
+  49, 298,
+  49, 648,
+  49, 997,
+  49, 3056,
+};
+const uint8_t code_eu041Codes[] PROGMEM = {
+  0x0C,
+  0xB2,
+  0xCA,
+  0x49,
+  0x13,
+  0x0B,
+  0x2C,
+  0xB2,
+  0x92,
+  0x44,
+  0xB0,
+};
+const struct IrCode code_eu041Code PROGMEM = {
+  freq_to_timerval(33333),
+  28,   // # of pairs
+  3,    // # of bits per index
+  code_eu041Times,
+  code_eu041Codes
+};
+
+/* Duplicate timing table, same as na009 !
+ const uint16_t code_eu042Times[] PROGMEM = {
+  53, 56,
+  53, 171,
+  53, 3950,
+  53, 9599,
+  898, 451,
+  900, 226,
+ };
+ */
+const uint8_t code_eu042Codes[] PROGMEM = {
+  0x80,
+  0x00,
+  0x00,
+  0x24,
+  0x92,
+  0x09,
+  0x00,
+  0x82,
+  0x00,
+  0x04,
+  0x10,
+  0x49,
+  0x2A,
+  0xBA,
+  0x00,
+};
+const struct IrCode code_eu042Code PROGMEM = {
+  freq_to_timerval(38462),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na009Times,
+  code_eu042Codes
+};
+const uint16_t code_eu043Times[] PROGMEM = {
+  1037, 4216,
+  1040, 0,
+};
+const uint8_t code_eu043Codes[] PROGMEM = {
+  0x10,
+};
+const struct IrCode code_eu043Code PROGMEM = {
+  freq_to_timerval(41667),
+  2,    // # of pairs
+  2,    // # of bits per index
+  code_eu043Times,
+  code_eu043Codes
+};
+
+/* Duplicate timing table, same as na004 !
+ const uint16_t code_eu044Times[] PROGMEM = {
+  55, 57,
+  55, 170,
+  55, 3949,
+  55, 9623,
+  56, 0,
+  898, 453,
+  900, 226,
+ };
+ */
+const uint8_t code_eu044Codes[] PROGMEM = {
+  0xA0,
+  0x02,
+  0x01,
+  0x04,
+  0x90,
+  0x48,
+  0x20,
+  0x00,
+  0x00,
+  0x04,
+  0x92,
+  0x49,
+  0x2B,
+  0x3D,
+  0x00,
+};
+const struct IrCode code_eu044Code PROGMEM = {
+  freq_to_timerval(38462),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na004Times,
+  code_eu044Codes
+};
+const uint16_t code_eu045Times[] PROGMEM = {
+  152, 471,
+  154, 156,
+  154, 469,
+  154, 2947,
+};
+const uint8_t code_eu045Codes[] PROGMEM = {
+  0x16,
+  0xE5,
+  0x90,
+};
+const struct IrCode code_eu045Code PROGMEM = {
+  freq_to_timerval(41667),
+  10,   // # of pairs
+  2,    // # of bits per index
+  code_eu045Times,
+  code_eu045Codes
+};
+const uint16_t code_eu046Times[] PROGMEM = {
+  15, 493,
+  16, 493,
+  16, 698,
+  16, 1414,
+};
+const uint8_t code_eu046Codes[] PROGMEM = {
+  0x16,
+  0xAB,
+  0x56,
+  0xA9,
+};
+const struct IrCode code_eu046Code PROGMEM = {
+  freq_to_timerval(34602),
+  16,   // # of pairs
+  2,    // # of bits per index
+  code_eu046Times,
+  code_eu046Codes
+};
+const uint16_t code_eu047Times[] PROGMEM = {
+  3, 496,
+  3, 745,
+  3, 1488,
+};
+const uint8_t code_eu047Codes[] PROGMEM = {
+  0x41,
+  0x24,
+  0x12,
+  0x41,
+  0x00,
+};
+const struct IrCode code_eu047Code PROGMEM = {
+  0,              // Non-pulsed code
+  17,   // # of pairs
+  2,    // # of bits per index
+  code_eu047Times,
+  code_eu047Codes
+};
+
+/* Duplicate timing table, same as na009 !
+ const uint16_t code_eu048Times[] PROGMEM = {
+  53, 56,
+  53, 171,
+  53, 3950,
+  53, 9599,
+  898, 451,
+  900, 226,
+ };
+ */
+const uint8_t code_eu048Codes[] PROGMEM = {
+  0x80,
+  0x00,
+  0x00,
+  0x24,
+  0x82,
+  0x49,
+  0x04,
+  0x80,
+  0x40,
+  0x00,
+  0x12,
+  0x09,
+  0x2A,
+  0xBA,
+  0x00,
+};
+const struct IrCode code_eu048Code PROGMEM = {
+  freq_to_timerval(38462),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na009Times,
+  code_eu048Codes
+};
+const uint16_t code_eu049Times[] PROGMEM = {
+  55, 55,
+  55, 167,
+  55, 4577,
+  55, 9506,
+  448, 445,
+  450, 444,
+};
+const uint8_t code_eu049Codes[] PROGMEM = {
+  0x80,
+  0x92,
+  0x00,
+  0x00,
+  0x92,
+  0x00,
+  0x00,
+  0x10,
+  0x40,
+  0x04,
+  0x82,
+  0x09,
+  0x2A,
+  0x97,
+  0x48,
+};
+const struct IrCode code_eu049Code PROGMEM = {
+  freq_to_timerval(38462),
+  40,   // # of pairs
+  3,    // # of bits per index
+  code_eu049Times,
+  code_eu049Codes
+};
+const uint16_t code_eu050Times[] PROGMEM = {
+  91, 88,
+  91, 267,
+  91, 3621,
+  361, 358,
+  361, 359,
+};
+const uint8_t code_eu050Codes[] PROGMEM = {
+  0x60,
+  0x00,
+  0x00,
+  0x00,
+  0x12,
+  0x49,
+  0x24,
+  0x92,
+  0x42,
+  0x80,
+  0x00,
+  0x00,
+  0x00,
+  0x12,
+  0x49,
+  0x24,
+  0x92,
+  0x40,
+};
+const struct IrCode code_eu050Code PROGMEM = {
+  freq_to_timerval(33333),
+  48,   // # of pairs
+  3,    // # of bits per index
+  code_eu050Times,
+  code_eu050Codes
+};
+const uint16_t code_eu051Times[] PROGMEM = {
+  84, 88,
+  84, 261,
+  84, 3360,
+  347, 347,
+  347, 348,
+};
+const uint8_t code_eu051Codes[] PROGMEM = {
+  0x60,
+  0x82,
+  0x00,
+  0x20,
+  0x80,
+  0x41,
+  0x04,
+  0x90,
+  0x41,
+  0x2A,
+  0x02,
+  0x08,
+  0x00,
+  0x82,
+  0x01,
+  0x04,
+  0x12,
+  0x41,
+  0x04,
+  0x80,
+};
+const struct IrCode code_eu051Code PROGMEM = {
+  freq_to_timerval(38462),
+  52,   // # of pairs
+  3,    // # of bits per index
+  code_eu051Times,
+  code_eu051Codes
+};// Duplicate IR Code? - Similar to NA115
+
+const uint16_t code_eu052Times[] PROGMEM = {
+  16, 838,
+  17, 558,
+  17, 839,
+  17, 6328,
+};
+const uint8_t code_eu052Codes[] PROGMEM = {
+  0x1A,
+  0x9A,
+  0x9B,
+  0x9A,
+  0x9A,
+  0x99,
+};
+const struct IrCode code_eu052Code PROGMEM = {
+  freq_to_timerval(31250),
+  24,   // # of pairs
+  2,    // # of bits per index
+  code_eu052Times,
+  code_eu052Codes
+};// Duplicate IR Code? -  Similar to EU017
+
+
+/* Duplicate timing table, same as eu046 !
+ const uint16_t code_eu053Times[] PROGMEM = {
+  15, 493,
+  16, 493,
+  16, 698,
+  16, 1414,
+ };
+ */
+const uint8_t code_eu053Codes[] PROGMEM = {
+  0x26,
+  0xAB,
+  0x66,
+  0xAA,
+};
+const struct IrCode code_eu053Code PROGMEM = {
+  freq_to_timerval(34483),
+  16,   // # of pairs
+  2,    // # of bits per index
+  code_eu046Times,
+  code_eu053Codes
+};
+const uint16_t code_eu054Times[] PROGMEM = {
+  49, 53,
+  49, 104,
+  49, 262,
+  49, 264,
+  49, 8030,
+  100, 103,
+};
+const uint8_t code_eu054Codes[] PROGMEM = {
+  0x40,
+  0x1A,
+  0x23,
+  0x00,
+  0xD0,
+  0x80,
+};
+const struct IrCode code_eu054Code PROGMEM = {
+  freq_to_timerval(31250),
+  14,   // # of pairs
+  3,    // # of bits per index
+  code_eu054Times,
+  code_eu054Codes
+};
+
+/* Duplicate timing table, same as na009 !
+ const uint16_t code_eu055Times[] PROGMEM = {
+  53, 56,
+  53, 171,
+  53, 3950,
+  53, 9599,
+  898, 451,
+  900, 226,
+ };
+ */
+const uint8_t code_eu055Codes[] PROGMEM = {
+  0x80,
+  0x00,
+  0x00,
+  0x20,
+  0x92,
+  0x49,
+  0x00,
+  0x02,
+  0x40,
+  0x04,
+  0x90,
+  0x09,
+  0x2A,
+  0xBA,
+  0x00,
+};
+const struct IrCode code_eu055Code PROGMEM = {
+  freq_to_timerval(38462),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na009Times,
+  code_eu055Codes
+};
+const uint16_t code_eu056Times[] PROGMEM = {
+  112, 107,
+  113, 107,
+  677, 2766,
+};
+const uint8_t code_eu056Codes[] PROGMEM = {
+  0x26,
+};
+const struct IrCode code_eu056Code PROGMEM = {
+  freq_to_timerval(38462),
+  4,    // # of pairs
+  2,    // # of bits per index
+  code_eu056Times,
+  code_eu056Codes
+};
+
+/* Duplicate timing table, same as na004 !
+ const uint16_t code_eu057Times[] PROGMEM = {
+  55, 57,
+  55, 170,
+  55, 3949,
+  55, 9623,
+  56, 0,
+  898, 453,
+  900, 226,
+ };
+ */
+/*
+const uint8_t code_eu057Codes[] PROGMEM = {
+  0xA0,
+  0x00,
+  0x41,
+  0x04,
+  0x92,
+  0x08,
+  0x20,
+  0x02,
+  0x00,
+  0x04,
+  0x90,
+  0x49,
+  0x2B,
+  0x3D,
+  0x00,
+ };
+ const struct IrCode code_eu057Code PROGMEM = {
+  freq_to_timerval(38462),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na004Times,
+  code_eu057Codes
+ }; // Duplicate IR code - same as EU008
+ */
+/* Duplicate timing table, same as na009 !
+ const uint16_t code_eu058Times[] PROGMEM = {
+  53, 56,
+  53, 171,
+  53, 3950,
+  53, 9599,
+  898, 451,
+  900, 226,
+ };
+ */
+const uint8_t code_eu058Codes[] PROGMEM = {
+  0x80,
+  0x00,
+  0x00,
+  0x24,
+  0x10,
+  0x49,
+  0x00,
+  0x82,
+  0x00,
+  0x04,
+  0x10,
+  0x49,
+  0x2A,
+  0xBA,
+  0x00,
+};
+const struct IrCode code_eu058Code PROGMEM = {
+  freq_to_timerval(38462),
+  38,   // # of pairs
+  3,    // # of bits per index
+  code_na009Times,
+  code_eu058Codes
+};
+const uint16_t code_eu059Times[] PROGMEM = {
+  310, 613,
+  310, 614,
+  622, 8312,
+};
+const uint8_t code_eu059Codes[] PROGMEM = {
+  0x26,
+};
+const struct IrCode code_eu059Code PROGMEM = {
+  freq_to_timerval(41667),
+  4,    // # of pairs
+  2,    // # of bits per index
+  code_eu059Times,
+  code_eu059Codes
+};// Duplicate IR Code? - Similar to EU056
+
+const uint16_t code_eu060Times[] PROGMEM = {
+  50, 158,
+  53, 51,
+  53, 156,
+  53, 2180,
+};
+const uint8_t code_eu060Codes[] PROGMEM = {
+  0x25,
+  0x59,
+  0x9A,
+  0x5A,
+  0xE9,
+  0x56,
+  0x66,
+  0x96,
+  0xA0,
+};
+const struct IrCode code_eu060Code PROGMEM = {
+  freq_to_timerval(38462),
+  34,   // # of pairs
+  2,    // # of bits per index
+  code_eu060Times,
+  code_eu060Codes
+};
+
 
 ////////////////////////////////////////////////////////////////
 
@@ -2231,6 +4120,38 @@ const IrCode* const NApowerCodes[] PROGMEM = {
   &code_na038Code,
   &code_na039Code,
   &code_na040Code,
+  &code_na041Code,
+  &code_na042Code,
+  &code_na043Code,
+  &code_na044Code,
+  &code_na045Code,
+  &code_na046Code,
+  &code_na047Code,
+  &code_na048Code,
+  &code_na049Code,
+  &code_na050Code,
+  &code_na051Code,
+  &code_na052Code,
+  &code_na053Code,
+  &code_na054Code,
+  &code_na055Code,
+  &code_na056Code,
+  &code_na057Code,
+  &code_na058Code,
+  &code_na059Code,
+  &code_na060Code,
+  &code_na061Code,
+  &code_na062Code,
+  &code_na063Code,
+  &code_na064Code,
+  &code_na065Code,
+  &code_na066Code,
+  &code_na067Code,
+  &code_na068Code,
+  &code_na069Code,
+  &code_na070Code,
+
+  
 
 };
 
@@ -2259,6 +4180,43 @@ const IrCode* const EUpowerCodes[] PROGMEM = {
   &code_eu021Code,
   &code_eu022Code,
   &code_na022Code, // same as &code_eu023Code
+  &code_eu024Code,
+  &code_eu025Code,
+  &code_eu026Code,
+  &code_eu027Code,
+  &code_eu028Code,
+  &code_eu029Code,
+  &code_eu030Code,
+  &code_eu031Code,
+  &code_eu032Code,
+  &code_eu033Code,
+  &code_eu034Code,
+  //&code_eu035Code, same as eu009
+  &code_eu036Code,
+  &code_eu037Code,
+  &code_eu038Code,
+  &code_eu039Code,
+  &code_eu040Code,
+  &code_eu041Code,
+  &code_eu042Code,
+  &code_eu043Code,
+  &code_eu044Code,
+  &code_eu045Code,
+  &code_eu046Code,
+  &code_eu047Code,
+  &code_eu048Code,
+  &code_eu049Code,
+  &code_eu050Code,
+  &code_eu051Code,
+  &code_eu052Code,
+  &code_eu053Code,
+  &code_eu054Code,
+  &code_eu055Code,
+  &code_eu056Code,
+  //&code_eu057Code, same as eu008
+  &code_eu058Code,
+  &code_eu059Code,
+  &code_eu060Code,
  
 };
 
