@@ -61,13 +61,12 @@ The hardware for this project is very simple:
     IMPORTANT:  to use the ceramic resonator, you must perform the following:
                     make burn-fuse_cr
 */
+
 #include <avr/io.h>             // this contains all the IO port definitions
-//#include <avr/eeprom.h>
 #include <avr/sleep.h>          // definitions for power-down modes
 #include <avr/pgmspace.h>       // definitions for keeping constants in program memory
-//#include <avr/wdt.h> //remove watchdog
-#include "WORLD_IR_CODES.h"
-#define codeset 0
+#include "WORLD_IR_CODES.h"     // 
+#define codeset 0               // 
 
 void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t PWM_code );
 void flashslowLEDx( uint8_t num_blinks );
@@ -96,7 +95,7 @@ void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t PWM_code )
     // 99% of codes are PWM codes, they are pulses of a carrier frequecy
     // Usually the carrier is around 38KHz, and we generate that with PWM
     // timer 0
-    TCCR0A =_BV(COM0A0) | _BV(WGM01);          // set up timer 0
+    TCCR0A = _BV(COM0A0) | _BV(WGM01);          // set up timer 0
     //COM0A0 set makes OC0A toggle on match (see table 11-2 in atttiny 85 datasheet)
     //WGM01 sets the waveform mode to CTC, with a top value set in OCRA
     TCCR0B = _BV(CS00);
