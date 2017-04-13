@@ -12,7 +12,7 @@ See README.md for more details.
 #include <avr/sleep.h>          // definitions for power-down modes
 #include <avr/pgmspace.h>       // definitions for keeping constants in program memory
 #include <avr/wdt.h>
-#include "main.h"
+#include "WORLD_IR_CODES.h"
 
 
 /*
@@ -75,6 +75,7 @@ The hardware for this project is very simple:
 extern const PGM_P * const NApowerCodes[] PROGMEM;
 extern const PGM_P * const EUpowerCodes[] PROGMEM;
 extern const uint8_t num_NAcodes, num_EUcodes;
+
 
 
 /* This function is the 'workhorse' of transmitting IR codes.
