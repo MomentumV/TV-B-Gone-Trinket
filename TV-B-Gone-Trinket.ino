@@ -7,8 +7,6 @@ for use with Adafruit Trinket
 See README.md for more details.
 */
 
-
-
 /*
 This project transmits a bunch of TV POWER codes, one right after the other, 
 with a pause in between each.  (To have a visible indication that it is 
@@ -63,8 +61,6 @@ The hardware for this project is very simple:
     IMPORTANT:  to use the ceramic resonator, you must perform the following:
                     make burn-fuse_cr
 */
-#define MAX_WAIT_TIME 65535 //tens of us (ie: 655.350ms) limited by the size of uint_16
-
 #include <avr/io.h>             // this contains all the IO port definitions
 //#include <avr/eeprom.h>
 #include <avr/sleep.h>          // definitions for power-down modes
@@ -361,7 +357,6 @@ void tvbgone_sleep( void )
   PORTB |= _BV(LED) |       // turn off visible LED
            _BV(IRLED);     // turn off IR LED
 
-  //wdt_disable();           // turn off the watchdog (since we want to sleep //remove watchdog
   delay_ten_us(1000);      // wait 10 millisec
 
   MCUCR = _BV(SM1) |  _BV(SE);    // power down mode,  SE enables Sleep Modes
