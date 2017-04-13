@@ -63,13 +63,15 @@ The hardware for this project is very simple:
     IMPORTANT:  to use the ceramic resonator, you must perform the following:
                     make burn-fuse_cr
 */
+#define MAX_WAIT_TIME 65535 //tens of us (ie: 655.350ms) limited by the size of uint_16
 
 #include <avr/io.h>             // this contains all the IO port definitions
 //#include <avr/eeprom.h>
 #include <avr/sleep.h>          // definitions for power-down modes
 #include <avr/pgmspace.h>       // definitions for keeping constants in program memory
-#include <avr/wdt.h>
+//#include <avr/wdt.h> //remove watchdog
 #include "WORLD_IR_CODES.h"
+#define codeset 0
 
 void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t PWM_code );
 void flashslowLEDx( uint8_t num_blinks );
@@ -99,11 +101,15 @@ void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t PWM_code )
     // Usually the carrier is around 38KHz, and we generate that with PWM
     // timer 0
     TCCR0A =_BV(COM0A0) | _BV(WGM01);          // set up timer 0
+    //COM0A0 set makes OC0A toggle on match (see table 11-2 in atttiny 85 datasheet)
+    //WGM01 sets the waveform mode to CTC, with a top value set in OCRA
     TCCR0B = _BV(CS00);
+    //Counter 0 scaler bit 0 (divide clock freq by 2^(n-1) =0) 
+    //if you don't set any of the scaler bits, the timer is disabled.
   } else {
     // However some codes dont use PWM in which case we just turn the IR
     // LED on for the period of time.
-    PORTB &= ~_BV(IRLED);
+    PORTB &= ~_BV(IRLED); // pulls IRLED port of port b LOW (to switch the transistor ON)
   }
 
   // Now we wait, allowing the PWM hardware to pulse out the carrier 
@@ -115,7 +121,7 @@ void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t PWM_code )
   TCCR0B = 0;
   // And make sure that the IR LED is off too (since the PWM may have 
   // been stopped while the LED is on!)
-  PORTB |= _BV(IRLED);           // turn off IR LED
+  PORTB |= _BV(IRLED);           // turn off IR LED, by putting IRLED port HIGH
 
   // Now we wait for the specified 'off' time
   delay_ten_us(offtime);
@@ -186,34 +192,50 @@ that index into another table in ROM that actually stores the on/off times
 */
 
 
-int main(void) {
+//int main(void) {
   uint16_t ontime, offtime;
   uint8_t i,j, Loop;
   uint8_t region = US;     // by default our code is US
   
-  Loop = 0;                // by default we are not going to loop
+  //Loop = 0;                // by default we are not going to loop
 
+  
+void setup(){
+  if (codeset == 0) {
+    extern const IrCode* const NApowerCodes[] PROGMEM; // come back to rename powercodes
+    extern uint8_t num_NAcodes;
+    } else {
+      extern const IrCode* const EUpowerCodes[] PROGMEM;
+      extern uint8_t num_EUcodes;
+    }
+    DDRB = _BV(LED) | _BV(IRLED);   // set the visible and IR LED pins to outputs
+    PORTB = _BV(LED) |              //  visible LED is off when pin is high
+    _BV(IRLED) |            // IR LED is off when pin is high
+    _BV(REGIONSWITCH);     // Turn on pullup on region switch pin
+    
+    // check the reset flags
+    if (i & _BV(BORF)) {    // Brownout
+    // Flash out an error and go to sleep
+    flashslowLEDx(2);  
+    tvbgone_sleep();  
+  }
+}
+
+void sendAllCodes(){
+
+  //num_codes = num_NAcodes;
   TCCR1 = 0;		   // Turn off PWM/freq gen, should be off already
   TCCR0A = 0;
   TCCR0B = 0;
 
+/* //going to remove watchdog
   i = MCUSR;                     // Save reset reason
   MCUSR = 0;                     // clear watchdog flag
   WDTCR = _BV(WDCE) | _BV(WDE);  // enable WDT disable
 
   WDTCR = 0;                     // disable WDT while we setup
+*/
 
-  DDRB = _BV(LED) | _BV(IRLED);   // set the visible and IR LED pins to outputs
-  PORTB = _BV(LED) |              //  visible LED is off when pin is high
-          _BV(IRLED) |            // IR LED is off when pin is high
-          _BV(REGIONSWITCH);     // Turn on pullup on region switch pin
-
-  // check the reset flags
-  if (i & _BV(BORF)) {    // Brownout
-    // Flash out an error and go to sleep
-    flashslowLEDx(2);	
-    tvbgone_sleep();  
-  }
 
   delay_ten_us(5000);            // Let everything settle for a bit
 
@@ -232,9 +254,9 @@ int main(void) {
   
   // turn on watchdog timer immediately, this protects against
   // a 'stuck' system by resetting it
-  wdt_enable(WDTO_8S); // 1 second long timeout
+  //wdt_enable(WDTO_8S); // 1 second long timeout //remove watchdog
 
-  do {	//Execute the code at least once.  If Loop is on, execute forever.
+//  do {	//Execute the code at least once.  If Loop is on, execute forever.
 
     // We may have different number of codes in either database
     if (region == US) {
@@ -246,7 +268,7 @@ int main(void) {
     // for every POWER code in our collection
     for(i=0 ; i < j; i++) {   
       //To keep Watchdog from resetting in middle of code.
-      wdt_reset();
+  //    wdt_reset(); //remove watchdog
 
       // point to next POWER code, from the right database
       if (region == US) {
@@ -306,10 +328,10 @@ int main(void) {
       // visible indication that a code has been output.
       quickflashLED(); 
     }
-  } while (Loop == 1);
+  //} while (Loop == 1);
   
   // We are done, no need for a watchdog timer anymore
-  wdt_disable();
+  //wdt_disable(); //remove watchdog
 
   // flash the visible LED on PB0  4 times to indicate that we're done
   delay_ten_us(65500); // wait maxtime 
@@ -330,7 +352,7 @@ void tvbgone_sleep( void )
   PORTB |= _BV(LED) |       // turn off visible LED
            _BV(IRLED);     // turn off IR LED
 
-  wdt_disable();           // turn off the watchdog (since we want to sleep
+  //wdt_disable();           // turn off the watchdog (since we want to sleep //remove watchdog
   delay_ten_us(1000);      // wait 10 millisec
 
   MCUCR = _BV(SM1) |  _BV(SE);    // power down mode,  SE enables Sleep Modes
@@ -373,11 +395,11 @@ void quickflashLED( void ) {
 void quickflashLEDx( uint8_t x ) {
   quickflashLED();
   while(--x) {
-  	wdt_reset();
+  //	wdt_reset(); //remove watchdog
 	delay_ten_us(15000);     // 150 millisec delay between flahes
 	quickflashLED();
   }
-  wdt_reset();                // kick the dog
+  //wdt_reset();                // kick the dog //remove watchdog
 }
 
 // This is like the above but way slower, used for when the tvbgone
@@ -390,10 +412,10 @@ void flashslowLEDx( uint8_t num_blinks )
       // turn on visible LED at PB0 by pulling pin to ground
       PORTB &= ~_BV(LED);    
       delay_ten_us(50000);         // 500 millisec delay
-      wdt_reset();                 // kick the dog
+     // wdt_reset();                 // kick the dog //remove watchdog
       // turn off visible LED at PB0 by pulling pin to +3V
       PORTB |= _BV(LED);          
       delay_ten_us(50000);	   // 500 millisec delay
-      wdt_reset();                 // kick the dog
+     // wdt_reset();                 // kick the dog //remove watchdog
     }
 }
