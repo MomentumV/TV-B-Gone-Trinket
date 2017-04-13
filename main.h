@@ -27,7 +27,7 @@ struct IrCode {
   uint8_t numpairs;
   uint8_t bitcompression;
   uint16_t const *times;
-  uint8_t codes[];
+  uint8_t const *codes;
 };
 
 void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t PWM_code );
