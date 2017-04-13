@@ -262,7 +262,7 @@ int main(void) {
 
       // Get pointer (address in memory) to pulse-times table
       // The address is 16-bits (2 byte, 1 word)
-      const PGM_P time_ptr = (PGM_P)pgm_read_word(code_ptr);
+      PGM_P time_ptr = (PGM_P)pgm_read_word(code_ptr);
       code_ptr+=2;
 
       // Transmit all codeElements for this POWER code 
