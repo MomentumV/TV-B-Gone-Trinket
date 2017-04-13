@@ -266,33 +266,36 @@ void sendAllCodes(){
     }
 
     // for every POWER code in our collection
+    
     for(i=0 ; i < j; i++) {   
+      PGM_P data_ptr;
       //To keep Watchdog from resetting in middle of code.
-  //    wdt_reset(); //remove watchdog
+      //    wdt_reset(); //remove watchdog
 
       // point to next POWER code, from the right database
       if (region == US) {
-	code_ptr = (PGM_P)pgm_read_word(NApowerCodes+i);  
+        data_ptr = (PGM_P)pgm_read_word(NApowerCodes+i);  
       } else {
-	code_ptr = (PGM_P)pgm_read_word(EUpowerCodes+i);  
+        data_ptr = (PGM_P)pgm_read_word(EUpowerCodes+i);  
       }
 
       // Read the carrier frequency from the first byte of code structure
-      const uint8_t freq = pgm_read_byte(code_ptr++);
+      const uint8_t freq = pgm_read_byte(data_ptr++);
       // set OCR for Timer1 to output this POWER code's carrier frequency
       OCR0A = freq; 
       
       // Get the number of pairs, the second byte from the code struct
-      const uint8_t numpairs = pgm_read_byte(code_ptr++);
+      const uint8_t numpairs = pgm_read_byte(data_ptr++);
 
       // Get the number of bits we use to index into the timer table
       // This is the third byte of the structure
-      const uint8_t bitcompression = pgm_read_byte(code_ptr++);
+      const uint8_t bitcompression = pgm_read_byte(data_ptr++);
 
       // Get pointer (address in memory) to pulse-times table
       // The address is 16-bits (2 byte, 1 word)
-      PGM_P time_ptr = (PGM_P)pgm_read_word(code_ptr);
-      code_ptr+=2;
+      PGM_P time_ptr = (PGM_P)pgm_read_word(data_ptr);
+      data_ptr+=2;
+      //code_ptr = (PGM_P)pgm_read_word(data_ptr); //not sure if we need this.
 
       // Transmit all codeElements for this POWER code 
       // (a codeElement is an onTime and an offTime)
@@ -302,31 +305,32 @@ void sendAllCodes(){
       // length of time specified in offTime
 
       // For EACH pair in this code....
+      cli(); //not sure if this is needed
       for (uint8_t k=0; k<numpairs; k++) {
-	uint8_t ti;
+	       uint8_t ti;
 	
-	// Read the next 'n' bits as indicated by the compression variable
-	// The multiply by 4 because there are 2 timing numbers per pair
-	// and each timing number is one word long, so 4 bytes total!
-	ti = (read_bits(bitcompression)) * 4;
-
-	// read the onTime and offTime from the program memory
-	ontime = pgm_read_word(time_ptr+ti);  // read word 1 - ontime
-	offtime = pgm_read_word(time_ptr+ti+2);  // read word 2 - offtime
-
-	// transmit this codeElement (ontime and offtime)
-	xmitCodeElement(ontime, offtime, (freq!=0));  
+	       // Read the next 'n' bits as indicated by the compression variable
+	       // The multiply by 4 because there are 2 timing numbers per pair
+	       // and each timing number is one word long, so 4 bytes total!
+	       ti = (read_bits(bitcompression)) * 4;
+         
+         // read the onTime and offTime from the program memory
+         ontime = pgm_read_word(time_ptr+ti);  // read word 1 - ontime
+         offtime = pgm_read_word(time_ptr+ti+2);  // read word 2 - offtime
+         
+         // transmit this codeElement (ontime and offtime)
+         xmitCodeElement(ontime, offtime, (freq!=0));  
       } 
-      
+      sei(); //not sure if we need this or the cli() above
       //Flush remaining bits, so that next code starts
       //with a fresh set of 8 bits.
       bitsleft_r=0;	
-
-      // delay 250 milliseconds before transmitting next POWER code
-      delay_ten_us(25000);
       
       // visible indication that a code has been output.
       quickflashLED(); 
+      
+      // delay 250 milliseconds before transmitting next POWER code
+      delay_ten_us(25000);     
     }
   //} while (Loop == 1);
   
@@ -339,6 +343,11 @@ void sendAllCodes(){
   quickflashLEDx(4);
 
   tvbgone_sleep();
+} //end of sendAllCodes
+
+void loop() {
+  tvbgone_sleep();
+  sendAllCodes();
 }
 
 
