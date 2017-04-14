@@ -257,7 +257,7 @@ void sendAllCodes(){
       // length of time specified in offTime
 
       // For EACH pair in this code....
-      //cli(); //not sure if this is needed
+      cli(); //not sure if this is needed
       for (uint8_t k=0; k<numpairs; k++) {
 	       uint8_t ti;
 	
@@ -273,7 +273,7 @@ void sendAllCodes(){
          // transmit this codeElement (ontime and offtime)
          xmitCodeElement(ontime, offtime, (timer_period!=0));  
       } 
-      //sei(); //not sure if we need this or the cli() above
+      sei(); //not sure if we need this or the cli() above
       //Flush remaining bits, so that next code starts
       //with a fresh set of 8 bits.
       bitsleft_r=0;	

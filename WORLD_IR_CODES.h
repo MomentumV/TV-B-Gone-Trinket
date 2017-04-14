@@ -8785,9 +8785,11 @@ const IrCode* const EUpowerCodes[] PROGMEM = {
   &code_eu134Code,
   &code_eu135Code,
   &code_eu136Code,
+/*  
   &code_eu137Code,
   &code_eu138Code,
   &code_eu139Code,
+  */
 };
 
 uint8_t num_NAcodes = NUM_ELEM(NApowerCodes);
