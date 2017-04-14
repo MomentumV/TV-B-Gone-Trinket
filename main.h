@@ -1,7 +1,9 @@
+#include <avr/pgmspace.h>
+
 // What pins do what
-#define LED PB2
+#define LED PB1 //built-in led
 #define IRLED PB0
-#define REGIONSWITCH PB1
+#define REGIONSWITCH PB2
 
 // Two regions!
 #define US 0

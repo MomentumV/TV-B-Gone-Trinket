@@ -1,4 +1,4 @@
-/*
+ /*
 Last edit by Mordecai Veldt 4/13/17
 TV-B-Gone for Trinket; based upon TV-B-Gone firmware 1.2 (c) Mitch Altman +Limor Fried 2009
 CC BY-SA 4.0 International
@@ -62,25 +62,53 @@ The hardware for this project is very simple:
                     make burn-fuse_cr
 */
 
-#define codeset 0  
-#include <avr/io.h>             // this contains all the IO port definitions
-#include <avr/sleep.h>          // definitions for power-down modes
-#include <avr/pgmspace.h>       // definitions for keeping constants in program memory
+#define CODESET 1 // 0 is US, 1 is EU   
 #include "WORLD_IR_CODES.h"     // 
-             // 
+#include <avr/sleep.h>          // definitions for power-down modes
+
+
 
 void xmitCodeElement(uint16_t ontime, uint16_t offtime, uint8_t period );
-//void flashslowLEDx( uint8_t num_blinks );
 void quickflashLEDx( uint8_t x );
 void tvbgone_sleep( void );
 void delay_ten_us(uint16_t us);
 void quickflashLED( void );
+uint8_t read_bits(uint8_t count);
 
+/*
 extern const IrCode* const NApowerCodes[] PROGMEM;
 extern const IrCode* const EUpowerCodes[] PROGMEM;
 extern uint8_t num_NAcodes, num_EUcodes;
+*/
+uint16_t ontime, offtime;
+uint8_t i, num_codes;
+uint8_t region = US;     // by default our code is US
 
-
+  
+void setup()
+{
+if (CODESET == 0) {
+    extern const IrCode* const NApowerCodes[] PROGMEM; // come back to rename powercodes
+    extern uint8_t num_NAcodes;
+    num_codes = num_NAcodes;
+    } else {
+      extern const IrCode* const EUpowerCodes[] PROGMEM;
+      extern uint8_t num_EUcodes;
+    num_codes = num_EUcodes;
+    }
+    DDRB =  _BV(IRLED); //|_BV(LED);   // set the visible and IR LED pins to outputs
+    //PORTB =// _BV(LED) |              //  visible LED is off when pin is high
+    PORTB = _BV(IRLED) |            // IR LED is off when pin is high
+    _BV(REGIONSWITCH);     // Turn on pullup on region switch pin
+    /*
+    // check the reset flags
+    if (i & _BV(BORF)) {    // Brownout
+    // Flash out an error and go to sleep
+    flashslowLEDx(2);  
+    tvbgone_sleep();  
+    
+  }*/
+}
 
 /* This function is the 'workhorse' of transmitting IR codes.
    Given the on and off times, it turns on the PWM output on and off
@@ -192,34 +220,7 @@ that index into another table in ROM that actually stores the on/off times
 */
 
 
-//int main(void) {
-  uint16_t ontime, offtime;
-  uint8_t i,j, Loop;
-  uint8_t region = US;     // by default our code is US
-  
-  //Loop = 0;                // by default we are not going to loop
 
-  
-void setup(){
-  if (codeset == 0) {
-    extern const IrCode* const NApowerCodes[] PROGMEM; // come back to rename powercodes
-    extern uint8_t num_NAcodes;
-    } else {
-      extern const IrCode* const EUpowerCodes[] PROGMEM;
-      extern uint8_t num_EUcodes;
-    }
-    DDRB =  _BV(IRLED); //|_BV(LED);   // set the visible and IR LED pins to outputs
-    //PORTB =// _BV(LED) |              //  visible LED is off when pin is high
-    PORTB = _BV(IRLED) |            // IR LED is off when pin is high
-    _BV(REGIONSWITCH);     // Turn on pullup on region switch pin
-    
-    // check the reset flags
-    if (i & _BV(BORF)) {    // Brownout
-    // Flash out an error and go to sleep
-    //flashslowLEDx(2);  
-    tvbgone_sleep();  
-  }
-}
 
 void sendAllCodes(){
 
@@ -228,26 +229,19 @@ void sendAllCodes(){
   TCCR0A = 0;
   TCCR0B = 0;
 
-/* //going to remove watchdog
-  i = MCUSR;                     // Save reset reason
-  MCUSR = 0;                     // clear watchdog flag
-  WDTCR = _BV(WDCE) | _BV(WDE);  // enable WDT disable
-
-  WDTCR = 0;                     // disable WDT while we setup
-*/
-
-
   delay_ten_us(5000);            // Let everything settle for a bit
 
   // determine region
-  if (PINB & _BV(REGIONSWITCH)) {
-    region = US; // US
+  if (CODESET==0) {
+    region = US; // US CODESET==0
+    num_codes = num_NAcodes;
   } else {
     region = EU;
+    num_codes = num_EUcodes;
   }
 
   // Tell the user what region we're in  - 5 is US 6 is EU
-  quickflashLEDx(5+region);
+ // quickflashLEDx(5+region);
   
   // Starting execution loop
   delay_ten_us(25000);
@@ -256,24 +250,17 @@ void sendAllCodes(){
   // a 'stuck' system by resetting it
   //wdt_enable(WDTO_8S); // 1 second long timeout //remove watchdog
 
-//  do {	//Execute the code at least once.  If Loop is on, execute forever.
 
-    // We may have different number of codes in either database
-    if (region == US) {
-      j = num_NAcodes;
-    } else {
-      j = num_EUcodes;
-    }
 
     // for every POWER code in our collection
     
-    for(i=0 ; i < j; i++) {   
+    for(i=0 ; i < num_codes; i++) {   
       PGM_P data_ptr;
       //To keep Watchdog from resetting in middle of code.
       //    wdt_reset(); //remove watchdog
 
       // point to next POWER code, from the right database
-      if (region == US) {
+      if (CODESET == 0) {
         data_ptr = (PGM_P)pgm_read_word(NApowerCodes+i);  
       } else {
         data_ptr = (PGM_P)pgm_read_word(EUpowerCodes+i);  
@@ -430,5 +417,5 @@ void flashslowLEDx( uint8_t num_blinks )
       delay_ten_us(50000);	   // 500 millisec delay
      // wdt_reset();                 // kick the dog //remove watchdog
     }
-}
-*/
+} */
+
