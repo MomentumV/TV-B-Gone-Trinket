@@ -8640,11 +8640,12 @@ const IrCode* const NApowerCodes[] PROGMEM = {
   &code_na129Code,
   &code_na130Code,
   &code_na131Code,
-  &code_na132Code,
+  /*&code_na132Code,
   &code_na133Code,
   &code_na134Code,
   &code_na135Code,
   &code_na136Code,
+  */
 };
 
 const IrCode* const EUpowerCodes[] PROGMEM = {

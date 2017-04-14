@@ -62,7 +62,7 @@ The hardware for this project is very simple:
                     make burn-fuse_cr
 */
 
-#define CODESET 1 // 0 is US, 1 is EU   
+#define CODESET 0 // 0 is US, 1 is EU   
 #include "WORLD_IR_CODES.h"     // 
 #include <avr/sleep.h>          // definitions for power-down modes
 
