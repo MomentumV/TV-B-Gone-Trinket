@@ -75,14 +75,10 @@ void delay_ten_us(uint16_t us);
 void quickflashLED( void );
 uint8_t read_bits(uint8_t count);
 
-/*
-extern const IrCode* const NApowerCodes[] PROGMEM;
-extern const IrCode* const EUpowerCodes[] PROGMEM;
-extern uint8_t num_NAcodes, num_EUcodes;
-*/
+
 uint16_t ontime, offtime;
-uint8_t i, num_codes;
-uint8_t region = US;     // by default our code is US
+uint8_t num_codes;
+
 
   
 void setup()
@@ -94,20 +90,13 @@ if (CODESET == 0) {
     } else {
       extern const IrCode* const EUpowerCodes[] PROGMEM;
       extern uint8_t num_EUcodes;
-    num_codes = num_EUcodes;
+      num_codes = num_EUcodes;
     }
-    DDRB =  _BV(IRLED); //|_BV(LED);   // set the visible and IR LED pins to outputs
-    //PORTB =// _BV(LED) |              //  visible LED is off when pin is high
-    PORTB = _BV(IRLED) |            // IR LED is off when pin is high
-    _BV(REGIONSWITCH);     // Turn on pullup on region switch pin
-    /*
-    // check the reset flags
-    if (i & _BV(BORF)) {    // Brownout
-    // Flash out an error and go to sleep
-    flashslowLEDx(2);  
-    tvbgone_sleep();  
-    
-  }*/
+    DDRB =  _BV(IRLED) |_BV(LED);   // set the visible and IR LED pins to outputs
+    PORTB &= ~_BV(LED);              //  visible LED is off when pin is low
+    PORTB |=  _BV(IRLED);            // IR LED is off when pin is high
+    delay_ten_us(500);
+    sendAllCodes();
 }
 
 /* This function is the 'workhorse' of transmitting IR codes.
@@ -223,47 +212,24 @@ that index into another table in ROM that actually stores the on/off times
 
 
 void sendAllCodes(){
-
-  //num_codes = num_NAcodes;
   TCCR1 = 0;		   // Turn off PWM/freq gen, should be off already
   TCCR0A = 0;
   TCCR0B = 0;
 
   delay_ten_us(5000);            // Let everything settle for a bit
 
-  // determine region
-  if (CODESET==0) {
-    region = US; // US CODESET==0
-    num_codes = num_NAcodes;
-  } else {
-    region = EU;
-    num_codes = num_EUcodes;
-  }
-
-  // Tell the user what region we're in  - 5 is US 6 is EU
- // quickflashLEDx(5+region);
+  // Tell the user what region we're in  - 4 is US 8 is EU
+  quickflashLEDx(4+CODESET*4);
   
-  // Starting execution loop
-  delay_ten_us(25000);
-  
-  // turn on watchdog timer immediately, this protects against
-  // a 'stuck' system by resetting it
-  //wdt_enable(WDTO_8S); // 1 second long timeout //remove watchdog
-
-
-
-    // for every POWER code in our collection
-    
-    for(i=0 ; i < num_codes; i++) {   
-      PGM_P data_ptr;
-      //To keep Watchdog from resetting in middle of code.
-      //    wdt_reset(); //remove watchdog
-
-      // point to next POWER code, from the right database
-      if (CODESET == 0) {
-        data_ptr = (PGM_P)pgm_read_word(NApowerCodes+i);  
+  // for every POWER code in our collection
+  uint8_t i;
+  for(i=0 ; i < num_codes; i++) {   
+    PGM_P data_ptr;
+    // point to next POWER code, from the right database
+    if (CODESET == 0) {
+      data_ptr = (PGM_P)pgm_read_word(NApowerCodes+i);  
       } else {
-        data_ptr = (PGM_P)pgm_read_word(EUpowerCodes+i);  
+      data_ptr = (PGM_P)pgm_read_word(EUpowerCodes+i);  
       }
 
       // Read the carrier frequency from the first byte of code structure
@@ -282,7 +248,6 @@ void sendAllCodes(){
       // The address is 16-bits (2 byte, 1 word)
       PGM_P time_ptr = (PGM_P)pgm_read_word(data_ptr);
       data_ptr+=2;
-      //code_ptr = (PGM_P)pgm_read_word(data_ptr); //not sure if we need this.
 
       // Transmit all codeElements for this POWER code 
       // (a codeElement is an onTime and an offTime)
@@ -292,7 +257,7 @@ void sendAllCodes(){
       // length of time specified in offTime
 
       // For EACH pair in this code....
-      cli(); //not sure if this is needed
+      //cli(); //not sure if this is needed
       for (uint8_t k=0; k<numpairs; k++) {
 	       uint8_t ti;
 	
@@ -308,7 +273,7 @@ void sendAllCodes(){
          // transmit this codeElement (ontime and offtime)
          xmitCodeElement(ontime, offtime, (timer_period!=0));  
       } 
-      sei(); //not sure if we need this or the cli() above
+      //sei(); //not sure if we need this or the cli() above
       //Flush remaining bits, so that next code starts
       //with a fresh set of 8 bits.
       bitsleft_r=0;	
@@ -319,22 +284,15 @@ void sendAllCodes(){
       // delay 250 milliseconds before transmitting next POWER code
       delay_ten_us(25000);     
     }
-  //} while (Loop == 1);
-  
-  // We are done, no need for a watchdog timer anymore
-  //wdt_disable(); //remove watchdog
-
+    
   // flash the visible LED on PB0  4 times to indicate that we're done
   delay_ten_us(65500); // wait maxtime 
   delay_ten_us(65500); // wait maxtime 
   quickflashLEDx(4);
-
-  tvbgone_sleep();
 } //end of sendAllCodes
 
 void loop() {
   tvbgone_sleep();
-  sendAllCodes();
 }
 
 
