@@ -4251,6 +4251,7 @@ const struct IrCode code_na131Code PROGMEM = {
   code_na042Times,
   code_na131Codes
 };
+
 const uint16_t code_na132Times[] PROGMEM = {
   28, 106,
   28, 238,

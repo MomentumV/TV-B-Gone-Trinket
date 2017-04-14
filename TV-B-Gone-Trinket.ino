@@ -6,7 +6,7 @@ for use with Adafruit Trinket
 
 See README.md for more details.
 */
-
+#define CODESET 0 // 0 is US, 1 is EU   
 /*
 This project transmits a bunch of TV POWER codes, one right after the other, 
 with a pause in between each.  (To have a visible indication that it is 
@@ -62,7 +62,7 @@ The hardware for this project is very simple:
                     make burn-fuse_cr
 */
 
-#define CODESET 0 // 0 is US, 1 is EU   
+
 #include "WORLD_IR_CODES.h"     // 
 #include <avr/sleep.h>          // definitions for power-down modes
 
