@@ -1,5 +1,6 @@
 # README.md update history:  
-Readme Last Updated: 22 Oct. 2016  
+Updated April 2017 by MomentumV with trinket specific details.
+Previous Readme Last Updated: 22 Oct. 2016  
 By Gabriel Staples, http://www.ElectricRCAircraftGuy.com  
 -My contact info is available by clicking the "Contact Me" tab at the top of my website.  
 
